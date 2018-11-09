@@ -5,6 +5,8 @@ class Weapon(object):
         self.fading = fading
 
 
+
+#gfdgfd
 class Sword(Weapon):
     def __init__(self):
         super().__init__(attack=5)

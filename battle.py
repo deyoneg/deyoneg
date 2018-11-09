@@ -37,8 +37,6 @@ class Spear(Weapon):
     def __init__(self):
         super().__init__(attack=6, range=2, fading=0.5)
 
-
-
 class Warrior(object):
     @property
     def is_alive(self):

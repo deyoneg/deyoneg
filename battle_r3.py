@@ -44,9 +44,16 @@ class Warrior(object):
     def is_alive(self):
         return 0 < self.health
 
+    @property
+    def attack(self):
+        return self.weapon.attack
+
+    @attack.setter
+    def attack(self, value):
+        self.weapon = Weapon(attack=value)
+
     def __init__(self,
                 health=50,
-                attack=0,
                 defense=0,
                 vampirism=0.0,
                 weapon=None,
@@ -56,7 +63,6 @@ class Warrior(object):
         self.defense = defense
         self.vampirism = vampirism
         self.weapon = weapon
-        self.attack = attack #!временное явления изза особенностей тестового класса на checkio
         self.heal = heal
         if weapon is None:
             self.weapon = Sword()
@@ -65,10 +71,6 @@ class Warrior(object):
         self.health += damage * self.vampirism
 
     def get_striked(self, attacker, cover=0, line=0):
-
-        #!временное явления изза особенностей тестового класса на checkio
-        if attacker.attack != 0: attacker.weapon = Weapon(attack=attacker.attack)
-        
         damage = max(
             0, attacker.weapon.attack - (attacker.weapon.attack * attacker.weapon.fading) * line -
             self.defense - cover)
@@ -256,14 +258,14 @@ if __name__ == "__main__":
     # battle tests
     my_army = Army()
     my_army.add_units(Defender, 2)
-    my_army.add_units(Vampire, 2)
+    my_army.add_units(Healer, 2)
     my_army.add_units(Lancer, 4)
     my_army.add_units(Warrior, 1)
 
     enemy_army = Army()
     enemy_army.add_units(Warrior, 2)
     enemy_army.add_units(Lancer, 2)
-    enemy_army.add_units(Defender, 2)
+    enemy_army.add_units(Healer, 2)
     enemy_army.add_units(Vampire, 3)
 
     army_3 = Army()

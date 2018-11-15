@@ -130,3 +130,6 @@ GitHub.sublime-settings
 .idea/misc.xml
 .idea/vcs.xml
 .vscode/settings.json
+.vscode/launch.json
+.gitignore
+.gitignore

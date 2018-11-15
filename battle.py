@@ -3,7 +3,6 @@ class Weapon(object):
         self.attack = attack
         self.range = range
         self.fading = fading
-        self.chance = '1d3+2'
 
 class Sword(Weapon):
     def __init__(self):
@@ -18,6 +17,14 @@ class LongSword(Weapon):
 class TwoHandedSword(Weapon):
     def __init__(self):
         super().__init__(attack=9, range=2, fading=0.9)
+
+class Bow(Weapon):
+    def __init__(self):
+        super().__init__(attack=2, range=4, fading=0.3)
+
+class CrossBow(Weapon):
+    def __init__(self):
+        super().__init__(attack=3, range=5, fading=0.3)
 
 
 class Teeth(Weapon):
@@ -45,16 +52,9 @@ class Warrior(object):
     def is_alive(self):
         return 0 < self.health
 
-    @property
-    def attack(self):
-        return self.weapon.attack
-
-    @attack.setter
-    def attack(self, value):
-        self.weapon = Weapon(attack=value)
-
     def __init__(self,
                 health=50,
+                attack=0,
                 defense=0,
                 vampirism=0.0,
                 weapon=None,
@@ -64,6 +64,7 @@ class Warrior(object):
         self.defense = defense
         self.vampirism = vampirism
         self.weapon = weapon
+        self.attack = attack #!временное явления изза особенностей тестового класса на checkio
         self.heal = heal
         if weapon is None:
             self.weapon = Sword()
@@ -72,6 +73,10 @@ class Warrior(object):
         self.health += damage * self.vampirism
 
     def get_striked(self, attacker, cover=0, line=0):
+
+        #!временное явления изза особенностей тестового класса на checkio
+        if attacker.attack != 0: attacker.weapon = Weapon(attack=attacker.attack)
+        
         damage = max(
             0, attacker.weapon.attack - (attacker.weapon.attack * attacker.weapon.fading) * line -
             self.defense - cover)
